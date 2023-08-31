@@ -1,9 +1,7 @@
 package com.springBoot.employee.crudDemoemployee.rest;
 
-import com.springBoot.employee.crudDemoemployee.DAO.EmployeeDAO;
 import com.springBoot.employee.crudDemoemployee.entity.Employee;
 import com.springBoot.employee.crudDemoemployee.service.EmployeeService;
-import com.springBoot.employee.crudDemoemployee.service.EmployeeServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

@@ -1,41 +1,49 @@
 package com.springBoot.employee.crudDemoemployee.service;
 
-import com.springBoot.employee.crudDemoemployee.DAO.EmployeeDAO;
+import com.springBoot.employee.crudDemoemployee.DAO.EmployeeRepository;
 import com.springBoot.employee.crudDemoemployee.entity.Employee;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class EmployeeServiceImpl implements EmployeeService{
 
 
-    private EmployeeDAO theEmployeeDAO ;
+    private EmployeeRepository theEmployeeRepository;
 
-    public EmployeeServiceImpl(EmployeeDAO theEmployeeDAO) {
-        this.theEmployeeDAO = theEmployeeDAO;
+    public EmployeeServiceImpl(EmployeeRepository theEmployeeRepository) {
+        this.theEmployeeRepository = theEmployeeRepository;
     }
+
 
     @Override
     public List<Employee> findAllemp() {
-        return theEmployeeDAO.findAllEmployee();
+        return theEmployeeRepository.findAll();
     }
 
     @Override
     public Employee getEmployeeByID(int theID) {
-        return theEmployeeDAO.getEmployeeByID(theID);
+        Optional<Employee> result = theEmployeeRepository.findById(theID);
+        Employee theEmployee = null ;
+        if(result.isPresent()){
+            theEmployee = result.get();
+        }
+        else {
+            throw new RuntimeException("Did not find the employee id - " + theID) ;
+        }
+        return theEmployee;
     }
 
-
-    @Transactional
     @Override
     public Employee save(Employee theEmployee) {
-        return theEmployeeDAO.save(theEmployee);
+        return theEmployeeRepository.save(theEmployee);
     }
 
-    @Transactional
     @Override
     public void deleteById(int theID) {
-          theEmployeeDAO.deleteById(theID);
+        theEmployeeRepository.deleteById(theID);
     }
 }
